@@ -26,8 +26,8 @@
 Option Explicit
 
 Public Const AUTO_DUPLICATE_WINDOW_MINUTES As Long = 5
-Public Const LOG_FILE_PATH As String = "C:\Users\FG408DJ.SKODA\EmailCleanerAuto_log.txt"
-Public Const ARCHIVE_FOLDER_PATH As String = "C:\Users\FG408DJ.SKODA\OutlookDeletedArchive\"
+Public Const LOG_FILE_PATH As String = "C:\Users\FG408DJ\EmailCleanerAuto_log.txt"
+Public Const ARCHIVE_FOLDER_PATH As String = "C:\Users\FG408DJ\OutlookDeletedArchive\"
 Public Const ARCHIVE_RETENTION_DAYS As Long = 14
 
 ' Docasne zapnuto kvuli ladeni - loguje UPLNE KAZDE spusteni ItemAdd,
@@ -267,6 +267,25 @@ End Function
 Private Sub LogDuplicateAction(senderName As String, subj As String, recTime As Date)
     LogLine "DEL | " & senderName & " | " & subj & " | " & _
             Format(recTime, "YYYY-MM-DD HH:NN:SS")
+End Sub
+
+' Verejne rozhrani pro zapis vysledku rucniho cisteni z modulu EmailCleaner.
+' Samotny zapis do souboru zustava centralizovany v tomto modulu.
+Public Sub LogManualDuplicateAction(ByVal description As String)
+    LogLine "MANUAL DEL | " & description
+End Sub
+
+Public Sub LogManualCleanupSummary(ByVal total As Long, ByVal found As Long, _
+                                   ByVal deleted As Long, ByVal cancelled As Boolean)
+    Dim status As String
+    If cancelled Then
+        status = "CANCELLED"
+    Else
+        status = "DONE"
+    End If
+
+    LogLine "MANUAL " & status & " | total=" & total & _
+            " | found=" & found & " | deleted=" & deleted
 End Sub
 
 ' Volano z ThisOutlookSession.InitDuplicateWatcher pri (re)startu watcheru.

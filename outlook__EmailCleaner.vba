@@ -145,7 +145,10 @@ NextItem:
         .btnClose.Visible = True
     End With
 
-    If delCount = 0 Then Exit Sub
+    If delCount = 0 Then
+        LogManualCleanupSummary total, delCount, 0, False
+        Exit Sub
+    End If
 
     ' Cekej na potvrzeni
     Dim ans As Integer
@@ -153,6 +156,7 @@ NextItem:
                  vbOKCancel + vbQuestion, "Potvrdit mazani")
     If ans <> vbOK Then
         frmProgress.lblStatus.Caption = "Zruseno, nic nebylo smazano."
+        LogManualCleanupSummary total, delCount, 0, True
         Exit Sub
     End If
 
@@ -169,14 +173,20 @@ NextItem:
         Dim delItm As Object
         Set delItm = Application.Session.GetItemFromID(toDeleteId(d))
         If Not delItm Is Nothing Then
+            Err.Clear
             delItm.Delete
-            deleted = deleted + 1
+            If Err.Number = 0 Then
+                deleted = deleted + 1
+                LogManualDuplicateAction toDeleteDesc(d)
+            End If
         End If
         Set delItm = Nothing
         Err.Clear
         On Error GoTo 0
         If d Mod 10 = 0 Then DoEvents
     Next d
+
+    LogManualCleanupSummary total, delCount, deleted, False
 
     ' --- Vysledek ---
     Dim msg As String

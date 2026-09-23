@@ -12,7 +12,7 @@ Všechny komponenty běží uvnitř jednoho Outlook VBA projektu a používají 
 
 ### Ruční čištění duplicit
 
-`outlook__EmailCleaner.vba` vyhledá první store typu `olPrimaryExchangeMailbox` a vezme jeho Inbox. Položky seskupuje podle normalizované kombinace odesílatele a předmětu; časy porovnává v okně `DUPLICATE_WINDOW_MINUTES`. Identifikátory nalezených duplicit drží v paměti, zobrazí náhled ve `frmProgress` a teprve po potvrzení načte položky přes `GetItemFromID` a zavolá `Delete`.
+`outlook__EmailCleaner.vba` vyhledá první store typu `olPrimaryExchangeMailbox` a vezme jeho Inbox. Položky seskupuje podle normalizované kombinace odesílatele a předmětu; časy porovnává v okně `DUPLICATE_WINDOW_MINUTES`. Identifikátory nalezených duplicit drží v paměti, zobrazí náhled ve `frmProgress` a teprve po potvrzení načte položky přes `GetItemFromID` a zavolá `Delete`. Jednotlivé úspěšné přesuny a závěrečný souhrn zapisuje přes veřejné logovací procedury modulu `outlook__EmailCleanerAuto.vba` do stejného logu jako automatický watcher.
 
 Tok:
 

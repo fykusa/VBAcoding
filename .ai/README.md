@@ -9,7 +9,7 @@ Kód je určen pro vestavěný Outlook VBA projekt, nikoli pro samostatné spuš
 | Soubor | Hlavní vstup | Účel |
 | --- | --- | --- |
 | `outlook__DiagnostikaVybranych.vba` | `DiagnostikaVybranych` | Vypíše metadata označených zpráv a pokusí se je vložit do schránky. |
-| `outlook__EmailCleaner.vba` | `RemoveInboxDuplicates` | Najde duplicity v primárním Inboxu, zobrazí náhled a po potvrzení je přesune do Odstraněných položek. |
+| `outlook__EmailCleaner.vba` | `RemoveInboxDuplicates` | Najde duplicity v primárním Inboxu, zobrazí náhled, po potvrzení je přesune do Odstraněných položek a výsledek zapíše do sdíleného logu. |
 | `outlook__EmailCleanerAuto.vba` | `CheckAndRemoveDuplicateSilent` | Obsluhuje automatickou kontrolu nově příchozích zpráv, archivaci, mazání a logování. |
 | `outlook__ThisOutlookSession_DuplicateWatcher.vba` | `Application_Startup`, `InitDuplicateWatcher` | Napojí automatickou kontrolu na událost `InboxItems.ItemAdd`. |
 | `outlook__InboxSizeTools.vba` | `ShowMailboxReport`, `MarkLargeItems` | Analyzuje velikosti složek a označí 50 největších položek kategorií `! Velky mail`. |
@@ -23,6 +23,7 @@ Podrobnější mapa je v [onboarding.md](onboarding.md) a vazby mezi komponentam
 - povolené spouštění maker podle firemních bezpečnostních pravidel;
 - přístup k primární Exchange schránce pro nástroje, které ji vyhledávají přes `olPrimaryExchangeMailbox`;
 - UserForm `frmProgress` pro `EmailCleaner` a `InboxSizeTools`.
+- Modul `outlook__EmailCleanerAuto.vba` pro sdílené logování výsledků ručního čištění.
 
 Formulář je exportován jako `frmProgress.frm` s binárním doprovodem `frmProgress.frx`. Očekávané prvky jsou:
 
